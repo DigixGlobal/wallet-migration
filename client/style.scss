@@ -1,0 +1,10 @@
+.ui.button {
+  margin-bottom: 0.2em !important;
+}
+
+.ui.selectable:not(.active) {
+  cursor: pointer;
+  &:hover {
+    background: rgba(255,255,255,.5);
+  }
+}

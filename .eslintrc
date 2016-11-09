@@ -1,0 +1,15 @@
+extends:
+  eslint-config-airbnb
+
+settings:
+  ecmascript: 6
+
+rules:
+  react/prefer-stateless-function: 0
+  arrow-body-style: 0
+  no-underscore-dangle: 0
+  max-len: 0
+
+parserOptions:
+  ecmaFeatures:
+    experimentalObjectRestSpread: true

@@ -7,7 +7,9 @@ const ExtractTextPlugin = require('extract-text-webpack-plugin');
 const nodeEnv = process.env.NODE_ENV;
 const development = nodeEnv !== 'production';
 
-const cssLoader = development ? 'style-loader!css-loader!sass-loader' : ExtractTextPlugin.extract('style-loader', 'css-loader!sass-loader');
+const cssLoader = development ?
+  'style-loader!css-loader!sass-loader' :
+  ExtractTextPlugin.extract({ fallbackLoader: 'style-loader', loader: 'css-loader!sass-loader' });
 
 const babelPresets = [
   require.resolve('babel-preset-es2015'),
@@ -84,14 +86,19 @@ if (development) {
     publicPath: '/',
   };
   config.plugins = config.plugins.concat([
-    new webpack.optimize.UglifyJsPlugin({
-      compress: {
-        warnings: false,
-      },
-      output: {
-        comments: false,
-      },
-    }),
+    new webpack.optimize.OccurrenceOrderPlugin(),
+    new webpack.optimize.AggressiveMergingPlugin(),
+    new webpack.optimize.DedupePlugin(),
+    // new webpack.optimize.UglifyJsPlugin({
+    //   mangle: false,
+    //   compress: {
+    //     warnings: false,
+    //   },
+    //   output: {
+    //     comments: false,
+    //   },
+    // }),
+    new webpack.NoErrorsPlugin(),
     new webpack.DefinePlugin({
       'process.env': {
         NODE_ENV: JSON.stringify(nodeEnv),

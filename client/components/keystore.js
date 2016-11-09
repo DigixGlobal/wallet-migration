@@ -59,7 +59,7 @@ export default class Keystore extends Component {
                         </Button>
                       }
                       positioning="bottom left"
-                      content="Download a password-protected JSON file compatible with MyEtherWallet"
+                      content="Download a password-encrypted JSON file"
                       inverted
                     />
                   </div>

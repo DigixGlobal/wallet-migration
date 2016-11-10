@@ -8233,7 +8233,7 @@ i.flag:not(.icon) {
 i.flag:not(.icon):before {
   display: inline-block;
   content: '';
-  background: url(/9c74e172f87984c48ddf5c8108cabe67.png) no-repeat -108px -1976px;
+  background: url(/migrate/9c74e172f87984c48ddf5c8108cabe67.png) no-repeat -108px -1976px;
   width: 16px;
   height: 11px; }
 
@@ -12527,8 +12527,8 @@ a.ui.inverted.grey.header:hover {
 *******************************/
 @font-face {
   font-family: 'Icons';
-  src: url(/f7c2b4b747b1a225eb8dee034134a1b0.eot);
-  src: url(/f7c2b4b747b1a225eb8dee034134a1b0.eot?#iefix) format("embedded-opentype"), url(/97493d3f11c0a3bd5cbd959f5d19b699.woff2) format("woff2"), url(/d9ee23d59d0e0e727b51368b458a0bff.woff) format("woff"), url(/706450d7bba6374ca02fe167d86685cb.ttf) format("truetype"), url(/2980083682e94d33a66eef2e7d612519.svg#icons) format("svg");
+  src: url(/migrate/f7c2b4b747b1a225eb8dee034134a1b0.eot);
+  src: url(/migrate/f7c2b4b747b1a225eb8dee034134a1b0.eot?#iefix) format("embedded-opentype"), url(/migrate/97493d3f11c0a3bd5cbd959f5d19b699.woff2) format("woff2"), url(/migrate/d9ee23d59d0e0e727b51368b458a0bff.woff) format("woff"), url(/migrate/706450d7bba6374ca02fe167d86685cb.ttf) format("truetype"), url(/migrate/2980083682e94d33a66eef2e7d612519.svg#icons) format("svg");
   font-style: normal;
   font-weight: normal;
   font-variant: normal;

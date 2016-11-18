@@ -2,7 +2,7 @@ import React, { PropTypes, Component } from 'react';
 import { Dimmer, Loader, Form, Input, Modal, Popup, Icon, Button, Header } from 'semantic-ui-react';
 import Wallet from 'ethereumjs-wallet';
 
-export default class Mnemonic extends Component {
+export default class DownloadKeystore extends Component {
   constructor(props) {
     super(props);
     this.state = { open: false };
@@ -38,7 +38,7 @@ export default class Mnemonic extends Component {
       element.click();
       this.setState({ loading: false });
       this.handleShow(false);
-    });
+    }, 10);
   }
   renderPasswordBox({ text, name }) {
     return (
@@ -58,7 +58,7 @@ export default class Mnemonic extends Component {
         />
         <Icon
           name={this.state.error ? 'cancel' : 'key'}
-          color={this.state.error ? 'red' : ''}
+          color={this.state.error ? 'red' : 'black'}
         />
       </Form.Input>
     );
@@ -78,7 +78,7 @@ export default class Mnemonic extends Component {
         />
         <Modal open={this.state.open} onClose={() => this.handleShow(false)}>
           <Dimmer active={this.state.loading} inverted>
-            <Loader inverted>Generating Keystore</Loader>
+            <Loader inverted />
           </Dimmer>
           <Header>
             <Icon name="file archive outline" />
@@ -107,6 +107,6 @@ export default class Mnemonic extends Component {
   }
 }
 
-Mnemonic.propTypes = {
-  keystore: PropTypes.object.isRequried,
+DownloadKeystore.propTypes = {
+  keystore: PropTypes.object,
 };

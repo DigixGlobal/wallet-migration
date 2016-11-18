@@ -23,7 +23,7 @@ export default class PasswordEntryForm extends Component {
           />
           <Icon
             name={this.props.error ? 'cancel' : 'unlock'}
-            color={this.props.error ? 'red' : ''}
+            color={this.props.error ? 'red' : 'black'}
           />
           <Button
             disabled={this.props.disabled}
@@ -37,7 +37,7 @@ export default class PasswordEntryForm extends Component {
 }
 
 PasswordEntryForm.propTypes = {
-  onCompleted: PropTypes.func.isRequred,
+  onCompleted: PropTypes.func,
   disabled: PropTypes.bool,
-  error: PropTypes.string,
+  error: PropTypes.oneOfType([PropTypes.bool, PropTypes.string]),
 };

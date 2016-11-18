@@ -8,3 +8,11 @@
     background: rgba(255,255,255,.5);
   }
 }
+
+.dragbox {
+  cursor: pointer;
+  opacity: 0.85;
+  &.active {
+    opacity: 1;
+  }
+}

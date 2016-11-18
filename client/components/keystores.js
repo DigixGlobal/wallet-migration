@@ -23,7 +23,7 @@ class Keystores extends Component {
     return (
       <Segment.Group>
         {keystores.length === 0 ?
-          <Segment>Sorry, no keystores found</Segment>
+          <Segment>No keystores found in LocalStorage - please upload one</Segment>
         :
           keystores.map((ks) => {
             return (

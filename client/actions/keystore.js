@@ -12,6 +12,29 @@ export function getKeystores() {
     dispatch({ type: GOT_KEYSTORES, keystores });
   };
 }
+export function importKeystores(files) {
+  return (dispatch) => {
+    return Promise.all(files.map((file) => {
+      return new Promise((resolve, reject) => {
+        const reader = new FileReader();
+        reader.readAsText(file, 'UTF-8');
+        reader.onload = () => {
+          try {
+            const keystore = JSON.parse(reader.result);
+            resolve({
+              keystore,
+              key: `${keystore.addresses[0]}${new Date().getTime()}`,
+            });
+          } catch (e2) { reject(e2); }
+        };
+      });
+    })).then((keystores) => {
+      dispatch({ type: GOT_KEYSTORES, keystores });
+    }).catch(() => {
+      alert("Couldn't read files");
+    });
+  };
+}
 export function unlockKeystore(keystore, password) {
   return (dispatch) => {
     dispatch({ type: UNLOCKING_ACCOUNT, key: keystore.key });

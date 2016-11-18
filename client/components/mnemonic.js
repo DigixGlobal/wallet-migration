@@ -1,5 +1,5 @@
 import React, { PropTypes, Component } from 'react';
-import { Divider, Modal, Popup, Icon, Button, Segment, Header, Grid } from 'semantic-ui-react';
+import { Divider, Modal, Popup, Icon, Button, Header } from 'semantic-ui-react';
 
 export default class Mnemonic extends Component {
   constructor(props) {
@@ -26,7 +26,7 @@ export default class Mnemonic extends Component {
         />
         <Modal
           basic
-          open={this.state.open}
+          open={!!this.state.open}
         >
           <Header inverted as="h2">
             <Icon name="horizontal ellipsis" />
@@ -57,5 +57,5 @@ export default class Mnemonic extends Component {
 }
 
 Mnemonic.propTypes = {
-  keystore: PropTypes.object.isRequried,
+  keystore: PropTypes.object,
 };

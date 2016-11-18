@@ -29,7 +29,7 @@ export default class Keystore extends Component {
           </Grid.Column>
           <Grid.Column textAlign="center" width={13}>
             <Header>
-              <Header.Subheader as="h3" className="truncated" textAlign="center">
+              <Header.Subheader as="h3" className="truncated">
                 0x{keystore.keystore.addresses[0]}
               </Header.Subheader>
             </Header>

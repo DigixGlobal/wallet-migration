@@ -16,11 +16,15 @@ function updatedKeystore(state, key, update) {
 export default function (state = {}, action) {
   switch (action.type) {
     case GOT_KEYSTORES:
-      return { ...state, keystores: action.keystores, loaded: true };
+      const updated = {};
+      (state.keystores || []).concat(action.keystores).forEach((keystore) => {
+        updated[keystore.key] = keystore;
+      });
+      const keystores = Object.keys(updated).map(k => updated[k]);
+      return { ...state, keystores, loaded: true };
     case UNLOCKING_ACCOUNT:
       return updatedKeystore(state, action.key, { unlocking: true });
     case UNLOCKED_ACCOUNT:
-      console.log('action', action);
       return updatedKeystore(state, action.key, {
         unlocking: false,
         error: false,

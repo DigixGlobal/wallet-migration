@@ -21,7 +21,7 @@ export function unlockKeystore(keystore, password) {
         return resolve(lightwallet.keystore.deserialize(serializedKs));
       } catch (err) {
         try {
-          lightwallet.upgrade.upgradeOldSerialized(serializedKs, password, (err2, res) => {
+          return lightwallet.upgrade.upgradeOldSerialized(serializedKs, password, (err2, res) => {
             if (err2) { return reject(err2); }
             return resolve(lightwallet.keystore.deserialize(res));
           });
@@ -31,7 +31,6 @@ export function unlockKeystore(keystore, password) {
       }
     })
     .then((ks) => {
-      console.log('returning deserialized', ks);
       return new Promise((resolve) => {
         lightwallet.keystore.deriveKeyFromPassword(password, (err, pwDerivedKey) => {
           if (err) { throw err; }

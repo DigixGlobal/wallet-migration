@@ -61,7 +61,7 @@ const config = {
     // ],
     // fix peerDependencies with `npm link`
     alias: {
-      react: path.resolve('./node_modules/react')
+      react: path.resolve('./node_modules/react'),
     },
   },
   // resolveLoader: { fallback: path.join(__dirna,me, 'node_modules') },

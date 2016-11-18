@@ -1,6 +1,7 @@
 import React, { PropTypes, Component } from 'react';
-import { Input, Popup, Icon, Button, Segment, Header, Grid } from 'semantic-ui-react';
+import { Segment, Header, Grid } from 'semantic-ui-react';
 import Identicon from '@digix/react-components/components/identicon';
+import DownloadKeystore from './download-keystore';
 import Mnemonic from './mnemonic';
 import PasswordEntryForm from './password-entry-form';
 
@@ -8,20 +9,11 @@ export default class Keystore extends Component {
   constructor(props) {
     super(props);
     this.handlePasswordSubmit = this.handlePasswordSubmit.bind(this);
-    this.handleDownload = this.handleDownload.bind(this);
   }
   handlePasswordSubmit(e) {
     e.preventDefault();
     const password = e.currentTarget.querySelectorAll('[name=password]')[0].value;
     this.props.unlockKeystore(this.props.keystore, password);
-  }
-  handleDownload() {
-    const serialized = this.props.keystore.unlocked.serialize();
-    const address = this.props.keystore.keystore.addresses[0];
-    const element = document.createElement('a');
-    element.setAttribute('href', `data:application/json;charset=utf-8,${encodeURIComponent(serialized)}`);
-    element.setAttribute('download', `${address}.json`);
-    element.click();
   }
   render() {
     const { keystore, handleClick, active } = this.props;
@@ -52,16 +44,7 @@ export default class Keystore extends Component {
                 :
                   <div>
                     <Mnemonic keystore={keystore} />
-                    <Popup
-                      trigger={
-                        <Button size="tiny" color="blue" onClick={this.handleDownload}>
-                          <Icon name="file archive outline" /> Download Lightwallet
-                        </Button>
-                      }
-                      positioning="bottom left"
-                      content="Download a password-encrypted JSON file"
-                      inverted
-                    />
+                    <DownloadKeystore keystore={keystore} />
                   </div>
                 }
               </div>

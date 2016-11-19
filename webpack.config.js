@@ -83,7 +83,7 @@ if (development) {
   config.output = {
     path: path.join(__dirname, './dist'),
     filename: 'bundle.js',
-    publicPath: '/migrate/',
+    publicPath: '/wallet-migration/migrate/',
   };
   config.plugins = config.plugins.concat([
     new webpack.optimize.OccurrenceOrderPlugin(),

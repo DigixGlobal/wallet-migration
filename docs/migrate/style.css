@@ -11,6 +11,18 @@
   opacity: 0.85; }
   .dragbox.active {
     opacity: 1; }
+
+.pusher {
+  display: flex;
+  min-height: 100vh;
+  flex-direction: column; }
+
+.pusher > .container:not(.footer) {
+  flex: 1; }
+
+.pusher > .footer {
+  height: auto;
+  margin-top: 2em; }
 /*!
  * # Semantic UI 2.1.8 - Reset
  * http://github.com/semantic-org/semantic-ui/

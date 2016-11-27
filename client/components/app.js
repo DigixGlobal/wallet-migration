@@ -14,11 +14,9 @@ export default class App extends Component {
           <Header.Subheader as="h3" className="ui">Digix Global</Header.Subheader>
           <Header as="h2">Wallet Migration Tool</Header>
         </Container>
-        <Divider hidden />
         <Container text>
           This tool converts the old style (Jan 2016) lightwallet keystore used by the Digix beta app into a more modern Geth and MyEtherWallet compatible version.
         </Container>
-        <Divider hidden />
         <Container text>
           <DropArea />
           <Divider hidden />

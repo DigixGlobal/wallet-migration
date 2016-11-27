@@ -12,7 +12,7 @@ const cssLoader = development ?
   ExtractTextPlugin.extract({ fallbackLoader: 'style-loader', loader: 'css-loader!sass-loader' });
 
 const babelPresets = [
-  require.resolve('babel-preset-es2015'),
+  [require.resolve('babel-preset-es2015'), { loose: true, modules: false }],
   require.resolve('babel-preset-react'),
   require.resolve('babel-preset-stage-2'),
 ];
@@ -27,44 +27,34 @@ const config = {
   module: {
     loaders: [{
       test: /\.html$/,
-      loader: 'html',
+      loader: 'html-loader',
     }, {
       test: /\.json$/,
-      loader: 'json',
+      loader: 'json-loader',
     }, {
       test: /\.(gif|png|jpg|jpeg|ttf|eot|svg|woff(2)?)(\?[a-z0-9]+)?$/,
-      loader: 'file',
+      loader: 'file-loader',
     }, {
       test: /\.(scss|css|less)$/,
       loader: cssLoader,
     }, {
       test: /\.js$/,
-      loader: 'babel',
+      loader: 'babel-loader',
       include: [
         path.resolve('./client'),
-        // `npm link`ed modules
+        // es6 modules
         fs.realpathSync('./node_modules/@digix/react-components'),
+        fs.realpathSync('./node_modules/ethereumjs-tx'),
       ],
       query: { presets: babelPresets },
     }],
   },
-  // resolve: { fallback: path.join(__dirname, 'node_modules') },
   resolve: {
-    // extensions: ['', '.js', '.jsx'],
-    // modules: [
-    //   path.resolve('./client'),
-    //   'node_modules'
-    // ],
-    // loaders: [
-    //   path.resolve('./client'),
-    //   'node_modules'
-    // ],
     // fix peerDependencies with `npm link`
     alias: {
       react: path.resolve('./node_modules/react'),
     },
   },
-  // resolveLoader: { fallback: path.join(__dirna,me, 'node_modules') },
   plugins: [new HtmlWebpackPlugin({ template: './index.html' })],
 };
 
@@ -80,31 +70,28 @@ if (development) {
     ignored: '/node_modules/',
   };
 } else {
+  config.devtool = 'souce-map';
   config.output = {
     path: path.join(__dirname, './dist'),
     filename: 'bundle.js',
     publicPath: '/wallet-migration/migrate/',
   };
   config.plugins = config.plugins.concat([
-    new webpack.optimize.OccurrenceOrderPlugin(),
-    new webpack.optimize.AggressiveMergingPlugin(),
-    new webpack.optimize.DedupePlugin(),
-    // new webpack.optimize.UglifyJsPlugin({
-    //   mangle: false,
-    //   compress: {
-    //     warnings: false,
-    //   },
-    //   output: {
-    //     comments: false,
-    //   },
-    // }),
-    new webpack.NoErrorsPlugin(),
+    new ExtractTextPlugin('style.css'),
     new webpack.DefinePlugin({
       'process.env': {
         NODE_ENV: JSON.stringify(nodeEnv),
       },
     }),
-    new ExtractTextPlugin('style.css'),
+    new webpack.LoaderOptionsPlugin({
+      minimize: true,
+      debug: false,
+    }),
+    new webpack.optimize.OccurrenceOrderPlugin(),
+    new webpack.optimize.UglifyJsPlugin({
+      sourceMap: false,
+      comments: false,
+    }),
   ]);
 }
 

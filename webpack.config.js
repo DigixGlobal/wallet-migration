@@ -74,7 +74,7 @@ if (development) {
   config.output = {
     path: path.join(__dirname, './dist'),
     filename: 'bundle.js',
-    publicPath: '/wallet-migration/migrate/',
+    publicPath: '/',
   };
   config.plugins = config.plugins.concat([
     new ExtractTextPlugin('style.css'),

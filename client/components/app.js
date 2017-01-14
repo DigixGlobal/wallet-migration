@@ -3,6 +3,7 @@ import { Container, Header, Segment, Divider, Image } from 'semantic-ui-react';
 import logo from '@digix/react-components/assets/digix_logo.png';
 import Keystores from './keystores';
 import DropArea from './drop-area';
+import MnemonicImport from './mnemonic-import';
 
 export default class App extends Component {
   render() {
@@ -17,8 +18,11 @@ export default class App extends Component {
         <Container text>
           This tool converts the old style (Jan 2016) lightwallet keystore used by the Digix beta app into a more modern Geth and MyEtherWallet compatible version.
         </Container>
+        <Divider hidden />
         <Container text>
           <DropArea />
+          <Divider horizontal>or</Divider>
+          <MnemonicImport />
           <Divider hidden />
           <Keystores />
         </Container>

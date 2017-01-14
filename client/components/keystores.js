@@ -1,7 +1,7 @@
 import React, { Component, PropTypes } from 'react';
 import { connect } from 'react-redux';
 
-import { Segment, Loader } from 'semantic-ui-react';
+import { Divider, Header, Segment, Loader } from 'semantic-ui-react';
 import { getKeystores, unlockKeystore } from '../actions/keystore';
 
 import Keystore from './keystore';
@@ -21,23 +21,27 @@ class Keystores extends Component {
   renderKeystores() {
     const { keystores } = this.props.keystore;
     return (
-      <Segment.Group>
+      <div>
+        <Divider hidden />
         {keystores.length === 0 ?
           <Segment>No keystores found in LocalStorage - please upload one</Segment>
         :
-          keystores.map((ks) => {
-            return (
-              <Keystore
-                key={ks.key}
-                keystore={ks}
-                handleClick={this.handleClickKeystore}
-                unlockKeystore={this.props.unlockKeystore}
-                active={this.state.activeKeystore === ks.key}
-              />
-            );
-          })
+          <Segment.Group>
+            <Segment attached="top">Available Keystores</Segment>
+            {keystores.map((ks) => {
+              return (
+                <Keystore
+                  key={ks.key}
+                  keystore={ks}
+                  handleClick={this.handleClickKeystore}
+                  unlockKeystore={this.props.unlockKeystore}
+                  active={this.state.activeKeystore === ks.key}
+                />
+              );
+            })}
+          </Segment.Group>
         }
-      </Segment.Group>
+      </div>
     );
   }
   render() {

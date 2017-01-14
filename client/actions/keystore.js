@@ -35,6 +35,25 @@ export function importKeystores(files) {
     });
   };
 }
+export function importMnemonic(mnemonic) {
+  const password = '';
+  return (dispatch) => {
+    return new Promise((resolve, reject) => {
+      if (!lightwallet.keystore.isSeedValid(mnemonic)) { reject('invalid seed'); }
+      lightwallet.keystore.createVault({
+        password,
+        seed: mnemonic,
+      }, (err, ks) => {
+        if (err) { reject(err); }
+        ks.keyFromPassword(password, (err, pwDerivedKey) => {
+          ks.generateNewAddress(pwDerivedKey, 1);
+          // TODO use the correct key deviation <path></path>
+          console.log(ks.getAddresses());
+        });
+      });
+    });
+  };
+}
 export function unlockKeystore(keystore, password) {
   return (dispatch) => {
     dispatch({ type: UNLOCKING_ACCOUNT, key: keystore.key });

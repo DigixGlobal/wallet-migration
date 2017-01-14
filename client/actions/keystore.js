@@ -35,20 +35,28 @@ export function importKeystores(files) {
     });
   };
 }
-export function importMnemonic(mnemonic) {
-  const password = '';
+export function importMnemonic(mnemonic, password = '') {
   return (dispatch) => {
     return new Promise((resolve, reject) => {
-      if (!lightwallet.keystore.isSeedValid(mnemonic)) { reject('invalid seed'); }
-      lightwallet.keystore.createVault({
+      return lightwallet.keystore.createVault({
         password,
-        seed: mnemonic,
+        seedPhrase: mnemonic,
       }, (err, ks) => {
-        if (err) { reject(err); }
-        ks.keyFromPassword(password, (err, pwDerivedKey) => {
+        if (err) { return reject(err); }
+        return ks.keyFromPassword(password, (err2, pwDerivedKey) => {
+          if (err2) { return reject(err2); }
           ks.generateNewAddress(pwDerivedKey, 1);
-          // TODO use the correct key deviation <path></path>
-          console.log(ks.getAddresses());
+          ks.addresses = ks.getAddresses();
+          dispatch({
+            type: GOT_KEYSTORES,
+            keystores: [{
+              keystore: ks,
+              unlocked: ks,
+              pwDerivedKey,
+              key: `${ks.addresses[0]}${new Date().getTime()}`,
+            }],
+          });
+          return resolve();
         });
       });
     });
@@ -60,21 +68,17 @@ export function unlockKeystore(keystore, password) {
     return new Promise((resolve, reject) => {
       const serializedKs = JSON.stringify(keystore.keystore);
       try {
-        return resolve(lightwallet.keystore.deserialize(serializedKs));
-      } catch (err) {
-        try {
-          return lightwallet.upgrade.upgradeOldSerialized(serializedKs, password, (err2, res) => {
-            if (err2) { return reject(err2); }
-            return resolve(lightwallet.keystore.deserialize(res));
-          });
-        } catch (err3) {
-          return reject(err3);
-        }
+        return lightwallet.upgrade.upgradeOldSerialized(serializedKs, password, (err2, res) => {
+          if (err2) { return reject(err2); }
+          return resolve(lightwallet.keystore.deserialize(res));
+        });
+      } catch (err3) {
+        return reject(err3);
       }
     })
     .then((ks) => {
       return new Promise((resolve) => {
-        lightwallet.keystore.deriveKeyFromPassword(password, (err, pwDerivedKey) => {
+        ks.keyFromPassword(password, (err, pwDerivedKey) => {
           if (err) { throw err; }
           resolve(pwDerivedKey);
         });

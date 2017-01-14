@@ -1,7 +1,7 @@
 import React, { Component, PropTypes } from 'react';
 import { connect } from 'react-redux';
 
-import { Divider, Header, Segment, Loader } from 'semantic-ui-react';
+import { Divider, Segment, Loader } from 'semantic-ui-react';
 import { getKeystores, unlockKeystore } from '../actions/keystore';
 
 import Keystore from './keystore';

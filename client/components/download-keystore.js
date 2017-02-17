@@ -31,10 +31,11 @@ export default class DownloadKeystore extends Component {
       const privateKey = unlocked.exportPrivateKey(address, pwDerivedKey);
       const wallet = Wallet.fromPrivateKey(new Buffer(privateKey, 'hex'));
       const fileName = wallet.getV3Filename();
-      const serialized = JSON.stringify(wallet.toV3(password));
+      const serialized = JSON.stringify(wallet.toV3(password, { n: 1024 }));
       const element = document.createElement('a');
       element.setAttribute('href', `data:application/json;charset=utf-8,${encodeURIComponent(serialized)}`);
       element.setAttribute('download', fileName);
+      document.body.appendChild(element);
       element.click();
       this.setState({ loading: false });
       this.handleShow(false);
